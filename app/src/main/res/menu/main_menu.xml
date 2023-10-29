@@ -4,7 +4,6 @@
     <item
         android:titleCondensed="@string/main_menu_profile"
         android:id="@+id/profile"
-
         android:icon="@drawable/person"
         android:orderInCategory="100"
         android:actionLayout="@layout/toolbar"
@@ -18,5 +17,13 @@
         android:orderInCategory="200"
         android:actionLayout="@layout/toolbar"
         android:title="My library"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:titleCondensed="@string/main_book_page"
+        android:id="@+id/main_book"
+        android:icon="@drawable/main_book"
+        android:orderInCategory="100"
+        android:actionLayout="@layout/toolbar"
+        android:title="Main book"
         app:showAsAction="ifRoom"/>
 </menu>
