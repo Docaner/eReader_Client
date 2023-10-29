@@ -42,14 +42,14 @@ public class MainPage extends AppCompatActivity {
         //Выбор item'а
         Intent intent= new Intent(this, MainPage.class);
         int id = item.getItemId();
-        if (id==R.id.profile) {
-            intent = new Intent(this, Book_description.class);
-        }
         if (id==R.id.library) {
             intent = new Intent(this, Book_description.class);
         }
         if (id==R.id.main_book) {
-            intent = new Intent(this, Book_description.class);
+            intent = new Intent(this, MainPage.class);
+        }
+        if (id==R.id.exit_to_app) {
+            intent = new Intent(this, MainActivity.class);
         }
         startActivity(intent);
         return true;
