@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="120px"
-            android:text="Регистрация"
+            android:text="@string/register"
             android:textAlignment="center"
             android:textSize="34sp" />
 
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Логин"
+            android:hint="@string/login"
             android:inputType="text"
             android:minHeight="48dp" />
 
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Пароль"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:minHeight="48dp" />
 
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="120px"
             android:ems="10"
-            android:hint="Повторите пароль"
+            android:hint="@string/password_repeat"
             android:inputType="textPassword"
             android:minHeight="48dp" />
 
@@ -66,14 +66,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40px"
                 android:onClick="startMainActivity"
-                android:text="Авторизация"
+                android:text="@string/auth"
                 android:textSize="20sp" />
 
             <Button
                 android:id="@+id/reg_button_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Войти"
+                android:onClick="startMainPage"
+                android:text="@string/button_login"
                 android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
