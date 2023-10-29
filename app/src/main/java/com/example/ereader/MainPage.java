@@ -2,6 +2,8 @@ package com.example.ereader;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.os.Bundle;
@@ -20,6 +22,11 @@ public class MainPage extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Main Page");
+
+        //RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.recyclerview_books);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new BookAdapter(getApplicationContext(), new BooksCollection().books));
     }
     //Вывод меню в toolbar
     @Override
