@@ -100,52 +100,34 @@
             tools:srcCompat="@drawable/noun_book_1195058_0065a4lakerblue_1540561780_" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/read"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="34dp"
-            android:layout_marginBottom="55dp"
-            android:text="@string/read"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="112dp"
+            android:text="Читать"
+            android:onClick="startMainActivity"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <EditText
-        android:id="@+id/editTextTextMultiLine"
-        android:layout_width="239dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="130dp"
-        android:layout_marginBottom="41dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="13dp"
         android:layout_marginBottom="33dp"
         android:text="Button"
+        android:onClick="startMainActivity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextMultiLine"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
         tools:text="Отправить" />
 

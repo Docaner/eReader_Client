@@ -13,6 +13,9 @@
         android:theme="@style/Theme.EReader"
         tools:targetApi="31">
         <activity
+            android:name=".ReadActivity"
+            android:exported="false" />
+        <activity
             android:name=".Book_description"
             android:exported="false" />
         <activity
