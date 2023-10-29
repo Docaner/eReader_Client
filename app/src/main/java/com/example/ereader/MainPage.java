@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,7 +39,19 @@ public class MainPage extends AppCompatActivity {
     //Реакция на меню в toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-
+        //Выбор item'а
+        Intent intent= new Intent(this, MainPage.class);
+        int id = item.getItemId();
+        if (id==R.id.profile) {
+            intent = new Intent(this, Book_description.class);
+        }
+        if (id==R.id.library) {
+            intent = new Intent(this, Book_description.class);
+        }
+        if (id==R.id.main_book) {
+            intent = new Intent(this, Book_description.class);
+        }
+        startActivity(intent);
         return true;
     }
 }

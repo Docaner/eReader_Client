@@ -9,7 +9,7 @@
     android:background="@color/white"
     android:backgroundTint="@color/white"
     tools:context=".MainActivity">
-
+    <include layout="@layout/toolbar" />
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
