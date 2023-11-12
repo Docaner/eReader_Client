@@ -11,14 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
-
     Context context;
-    List<Book> books;
+    List<Book> books = new BooksCollection().books;
 
-    public BookAdapter(Context context, List<Book> books) {
-        this.context = context;
-        this.books = books;
-    }
     public BookAdapter(Context context) {
         this.context = context;
     }
@@ -26,7 +21,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
     @NonNull
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new BookViewHolder(LayoutInflater.from(context).inflate(R.layout.recource_book, parent, false));
+        return new BookViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recource_book, parent, false));
     }
 
     @Override

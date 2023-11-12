@@ -13,8 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class MainPage extends AppCompatActivity {
-    private final RecyclerView.Adapter adapter = new BookAdapter(this);
     private Toolbar toolbar;
+    private final RecyclerView.Adapter adapter = new BookAdapter(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +27,7 @@ public class MainPage extends AppCompatActivity {
         //RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerview_books);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new BookAdapter(getApplicationContext(), new BooksCollection().books));
+        recyclerView.setAdapter(adapter);
     }
     //Вывод меню в toolbar
     @Override

@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+//Можно переделать в страницу "Скачанные книги". Ссылка есть.
 public class Book_description extends AppCompatActivity {
     private Toolbar toolbar;
     @Override
@@ -19,8 +19,6 @@ public class Book_description extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Main Page");
-
-
 
     }
     //Вывод меню в toolbar

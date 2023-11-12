@@ -1,5 +1,7 @@
 package com.example.ereader;
 
+import java.util.Objects;
+
 public class Book {
 
     public int id;
@@ -41,5 +43,18 @@ public class Book {
     }
     public int getImage() {
         return image;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book item = (Book) o;
+        return Objects.equals(name, item.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
