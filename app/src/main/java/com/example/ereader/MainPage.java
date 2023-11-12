@@ -13,7 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class MainPage extends AppCompatActivity {
-
+    private final RecyclerView.Adapter adapter = new BookAdapter(this);
     private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -19,6 +19,9 @@ public class Book_description extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Main Page");
+
+
+
     }
     //Вывод меню в toolbar
     @Override

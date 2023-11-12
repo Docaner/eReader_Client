@@ -9,7 +9,7 @@
     <!-- Страница с книгой -->
     <string name="cover"> Обложка </string>
     <string name="Name"> Название: </string>
-    <string name="Authoe"> Автор: </string>
+    <string name="Author"> Автор: </string>
     <string name="description">Описание:</string>
     <string name="read"> Читать </string>
     <string name="Mark">Оценка: </string>
