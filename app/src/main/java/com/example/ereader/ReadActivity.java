@@ -2,9 +2,15 @@ package com.example.ereader;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,6 +28,11 @@ import java.util.ArrayList;
 
 public class ReadActivity extends AppCompatActivity {
     private Toolbar toolbar;
+    private StringBuilder text = new StringBuilder();
+    private int a;
+    private  TextView mTextStatus;
+    private TextView textView;;
+    private ScrollView  mScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,37 +41,63 @@ public class ReadActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Read");
+
+        BufferedReader reader = null;
+
         try {
-            PlayWithRawFiles();
+            reader = new BufferedReader(
+                    new InputStreamReader(getAssets().open("Doner_Loren_Neuderzimaa_strast_r2_Pr8Ji.txt")));
+
+            // do reading, usually loop until end of file reading
+            String mLine;
+            while ((mLine = reader.readLine()) != null) {
+                text.append(mLine);
+                text.append('\n');
+            }
         } catch (IOException e) {
-            Toast.makeText(getApplicationContext(),
-                    "Problems: " + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-    }
-    public void PlayWithRawFiles() throws IOException {
-        ArrayList<String> data_base = new ArrayList<String>();
-        String text = "";
-        StringBuffer buf = null;
-        try {
-            InputStream is = getApplicationContext().getAssets().open("g.txt"); //save this .txt under src/main/assets/g.txt
-            int size = is.available();
-            buf = new StringBuffer();
-            byte[] buffer = new byte[size];
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            if (is != null) {
-                while ((text = reader.readLine()) != null) {
-                    data_base.add(text.toString()); //create your own arraylist variable to hold each line being read from g.txt
+            Toast.makeText(getApplicationContext(), "Error reading file!", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    //log the exception
                 }
             }
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            TextView output= (TextView) findViewById(R.id.book_read);
+            output.setText((CharSequence) text);
+            TextView mTextStatus = (TextView) findViewById(R.id.book_read);
+            ScrollView mScrollView = (ScrollView) findViewById(R.id.scrollView2);
+            //scrollToBottom();
+            mScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+                @Override
+                public void onScrollChanged() {
+                    double scrollViewHeight = mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight();
+                    double getScrollY = mScrollView.getScrollY();
+                    double scrollPosition = (getScrollY / scrollViewHeight) * 100d;
+                    Log.i("scrollview", "scroll Percent Y: " + (int) scrollPosition);
+                    TextView procent= (TextView) findViewById(R.id.textView5);
+                    String stringdouble= String.format("%.2f",scrollPosition)+" %";
+                    procent.setText(stringdouble);
+                }
+            });
         }
-        TextView tv = (TextView) findViewById(R.id.book_text);
-        tv.setText(buf.toString());
-
 
     }
+    private void scrollToBottom()
+    {
+        mScrollView.post(new Runnable()
+        {
+            public void run()
+            {
+                mScrollView.smoothScrollTo(0, mTextStatus.getBottom());
+            }
+        });
+    }
+// then get the TextView and set its text
+
+
 
     //Вывод меню в toolbar
     @Override

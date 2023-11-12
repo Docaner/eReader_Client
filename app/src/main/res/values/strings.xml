@@ -23,4 +23,6 @@
     <!-- Регистрация -->
     <string name="register">Регистрация</string>
     <string name="password_repeat">Повторите пароль</string>
+    <!--Scroleview-->
+    <string name="procent">0 %</string>
 </resources>
