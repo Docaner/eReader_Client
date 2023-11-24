@@ -33,7 +33,7 @@ public class ReadActivity extends AppCompatActivity {
     private  TextView mTextStatus;
     private TextView textView;;
     private ScrollView  mScrollView;
-
+    private  double scrollViewHeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,16 +70,22 @@ public class ReadActivity extends AppCompatActivity {
             TextView mTextStatus = (TextView) findViewById(R.id.book_read);
             ScrollView mScrollView = (ScrollView) findViewById(R.id.scrollView2);
             //scrollToBottom();
+
             mScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
                 @Override
                 public void onScrollChanged() {
-                    double scrollViewHeight = mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight();
+                    scrollViewHeight = mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight();
                     double getScrollY = mScrollView.getScrollY();
                     double scrollPosition = (getScrollY / scrollViewHeight) * 100d;
                     Log.i("scrollview", "scroll Percent Y: " + (int) scrollPosition);
                     TextView procent= (TextView) findViewById(R.id.textView5);
                     String stringdouble= String.format("%.2f",scrollPosition)+" %";
                     procent.setText(stringdouble);
+                }
+            });
+            mScrollView.post(new Runnable() {
+                public void run() {
+                    mScrollView.scrollTo(0, (int)(mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight())*30/100);
                 }
             });
         }
