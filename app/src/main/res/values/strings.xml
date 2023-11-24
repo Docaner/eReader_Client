@@ -27,4 +27,5 @@
     <string name="procent">0 %</string>
     <string name="upper">+</string>
     <string name="down">-</string>
+    <string name="dark">Другая тема</string>
 </resources>

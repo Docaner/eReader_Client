@@ -1,6 +1,7 @@
 package com.example.ereader;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.method.ScrollingMovementMethod;
@@ -13,10 +14,12 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import org.xml.sax.SAXException;
@@ -34,9 +37,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class ReadActivity extends AppCompatActivity {
     private Toolbar toolbar;
+    private boolean isNightModeOn;
     private StringBuilder text = new StringBuilder();
     private int a;
-
+    private boolean useAlternativeTheme;
     private double scrollPosition;
     private  TextView mTextStatus;
     private TextView textView;;
@@ -48,8 +52,9 @@ public class ReadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_read);
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+        setTheme(android.R.style.Theme);
         getSupportActionBar().setTitle("Read");
-
+        isNightModeOn=false;
         BufferedReader reader = null;
 a=20;
         try {
@@ -99,7 +104,22 @@ a=20;
             });
             Button btnTextSize = (Button) findViewById(R.id.button);
             Button btnTextSizedown = (Button) findViewById(R.id.button3);
+            Switch  switch_btn = findViewById(R.id.switch1);
+            switch_btn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
 
+                if(isNightModeOn)
+                {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    isNightModeOn=false;
+                } else
+                {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    isNightModeOn=true;
+                }
+                }
+
+            });
             btnTextSize.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     double p=scrollPosition;
@@ -168,4 +188,8 @@ a=20;
         startActivity(intent);
         return true;
     }
+    public  void anotherstyle(View v){
+        getTheme();
+    }
+
 }

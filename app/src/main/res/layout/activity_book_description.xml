@@ -6,9 +6,8 @@
     style="@style/TextAppearance.AppCompat.Display4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:backgroundTint="@color/white"
-    >
+    android:background="@android:color/white"
+    android:backgroundTint="@android:color/white">
     <!--tools:context=".BookDescriptionsActivity"-->
     <include
         android:id="@+id/toolbar_main"
