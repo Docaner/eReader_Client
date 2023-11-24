@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,10 +30,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 public class ReadActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private StringBuilder text = new StringBuilder();
     private int a;
+
+    private double scrollPosition;
     private  TextView mTextStatus;
     private TextView textView;;
     private ScrollView  mScrollView;
@@ -43,7 +51,7 @@ public class ReadActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Read");
 
         BufferedReader reader = null;
-
+a=20;
         try {
             reader = new BufferedReader(
                     new InputStreamReader(getAssets().open("Doner_Loren_Neuderzimaa_strast_r2_Pr8Ji.txt")));
@@ -71,12 +79,13 @@ public class ReadActivity extends AppCompatActivity {
             ScrollView mScrollView = (ScrollView) findViewById(R.id.scrollView2);
             //scrollToBottom();
 
+
             mScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
                 @Override
                 public void onScrollChanged() {
                     scrollViewHeight = mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight();
                     double getScrollY = mScrollView.getScrollY();
-                    double scrollPosition = (getScrollY / scrollViewHeight) * 100d;
+                    scrollPosition = (getScrollY / scrollViewHeight) * 100d;
                     Log.i("scrollview", "scroll Percent Y: " + (int) scrollPosition);
                     TextView procent= (TextView) findViewById(R.id.textView5);
                     String stringdouble= String.format("%.2f",scrollPosition)+" %";
@@ -86,6 +95,35 @@ public class ReadActivity extends AppCompatActivity {
             mScrollView.post(new Runnable() {
                 public void run() {
                     mScrollView.scrollTo(0, (int)(mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight())*30/100);
+                }
+            });
+            Button btnTextSize = (Button) findViewById(R.id.button);
+            Button btnTextSizedown = (Button) findViewById(R.id.button3);
+
+            btnTextSize.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    double p=scrollPosition;
+
+                    a+=3;
+                    mTextStatus.setTextSize(a); //значение присваивается в sp (px лучше не использовать)
+                    mScrollView.post(new Runnable() {
+                        public void run() {
+                            mScrollView.scrollTo(0, (int)((mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight())*p/100));
+                        }
+                    });
+                }
+            });
+            btnTextSizedown.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    double p=scrollPosition;
+
+                   a-=3;
+                    mTextStatus.setTextSize(a); //значение присваивается в sp (px лучше не использовать)
+                    mScrollView.post(new Runnable() {
+                        public void run() {
+                            mScrollView.scrollTo(0, (int)((mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight())*p/100));
+                        }
+                    });
                 }
             });
         }

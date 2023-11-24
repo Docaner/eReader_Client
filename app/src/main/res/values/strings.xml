@@ -25,4 +25,6 @@
     <string name="password_repeat">Повторите пароль</string>
     <!--Scroleview-->
     <string name="procent">0 %</string>
+    <string name="upper">+</string>
+    <string name="down">-</string>
 </resources>
