@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:titleCondensed="@string/main_menu_libraru"
-        android:id="@+id/library"
-        android:icon="@drawable/my_library"
-        android:orderInCategory="200"
-        android:actionLayout="@layout/toolbar"
-        android:title="My library"
-        app:showAsAction="ifRoom"/>
-    <item
         android:titleCondensed="@string/main_book_page"
         android:id="@+id/main_book"
         android:icon="@drawable/main_book"
         android:orderInCategory="100"
         android:actionLayout="@layout/toolbar"
         android:title="Main book"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:titleCondensed="@string/main_menu_libraru"
+        android:id="@+id/library"
+        android:icon="@drawable/my_library"
+        android:orderInCategory="200"
+        android:actionLayout="@layout/toolbar"
+        android:title="My library"
         app:showAsAction="ifRoom"/>
     <item
         android:titleCondensed="@string/main_menu_exit"

@@ -26,6 +26,8 @@ public class Book {
         this.rating = rating;
         this.image = R.drawable.default_book;
     }
+
+    public Book(){}
     public int getId() {
         return id;
     }

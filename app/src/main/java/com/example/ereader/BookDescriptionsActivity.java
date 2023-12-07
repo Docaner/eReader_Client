@@ -1,5 +1,6 @@
 package com.example.ereader;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,17 +14,23 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.ereader.LocalDb.MyDbManager;
+
 public class BookDescriptionsActivity extends AppCompatActivity {
     private Toolbar toolbar;
+    private MyDbManager dbManager;
+    private BookDownload dbk;
+
     @Override
     protected void onCreate(@Nullable Bundle saved){
         super.onCreate(saved);
 
         //Подтягивание данных из списка книг
         setContentView(R.layout.activity_book_description);
-
+        Book bk =new Book();
         int positions = getIntent().getIntExtra("positions",0);
-        Book book = BooksCollection.getBooksCollections().get(positions);
+        Book book = BooksCollection.getBooksCollections().get(positions,bk);
+        dbk = new BookDownload(book);
 
         TextView textView1 = findViewById(R.id.textView);//оценка
         textView1.setText(book.getRating().toString());
@@ -37,6 +44,9 @@ public class BookDescriptionsActivity extends AppCompatActivity {
         imageView1.setImageResource(book.getImage());
 
 
+        dbManager = new MyDbManager(this);
+
+
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Main Page");
@@ -45,6 +55,22 @@ public class BookDescriptionsActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, ReadActivity.class);
         startActivity(intent);
+    }
+    //Кнопка скачивания
+    public void Download(View v){
+        //Сюда вставиьт изменение пути для Path
+        //Сюда вставить изменение прогресса для progress
+        dbManager.insertToDb(dbk.author,dbk.name,dbk.description,dbk.rating,dbk.progress,dbk.path);
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        dbManager.openDb();
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        dbManager.closeDb();
     }
     //Вывод меню в toolbar
     @Override
@@ -59,13 +85,13 @@ public class BookDescriptionsActivity extends AppCompatActivity {
         //Выбор item'а
         Intent intent= new Intent(this, MainPage.class);
         int id = item.getItemId();
-        if (id==R.id.library) {
-            intent = new Intent(this, Book_description.class);
-        }
-        if (id==R.id.main_book) {
+        if (id==R.id.main_book) {//главный список
             intent = new Intent(this, MainPage.class);
         }
-        if (id==R.id.exit_to_app) {
+        if (id==R.id.library) {//список скачанных книг
+            intent = new Intent(this, DownloadBooksPage.class);
+        }
+        if (id==R.id.exit_to_app) {// к логину и паролю
             intent = new Intent(this, MainActivity.class);
         }
         startActivity(intent);

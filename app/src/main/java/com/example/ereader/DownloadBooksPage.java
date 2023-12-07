@@ -2,40 +2,59 @@ package com.example.ereader;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-public class MainPage extends AppCompatActivity {
+import com.example.ereader.LocalDb.MyDbManager;
+
+import java.util.List;
+
+public class DownloadBooksPage extends AppCompatActivity {
     private Toolbar toolbar;
-    private final RecyclerView.Adapter adapter = new BookAdapter(this);
+    private MyDbManager dbManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
+        setContentView(R.layout.activity_download_books_page);
 
+
+        //toolbar
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Main Page");
 
+        dbManager = new MyDbManager(this);
+        dbManager.openDb();
+
+        List<BookDownload> listDownloadBooks = dbManager.getFromDb();
+        RecyclerView.Adapter adapter = new BookAdapterDownload(this,listDownloadBooks);
+
         //RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.recyclerview_books);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        RecyclerView mRecycleView;
+        mRecycleView = (RecyclerView) findViewById(R.id.recyclerview_download_books);
+        mRecycleView.setHasFixedSize(true);
+        mRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        mRecycleView.setItemAnimator(new DefaultItemAnimator());
+        mRecycleView.setAdapter(adapter);
+        dbManager.closeDb();
     }
-    //Вывод меню в toolbar
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu,menu);
         return true;
     }
+
     //Реакция на меню в toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item){

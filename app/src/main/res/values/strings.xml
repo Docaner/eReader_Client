@@ -12,6 +12,7 @@
     <string name="Author"> Автор: </string>
     <string name="description">Описание:</string>
     <string name="read"> Читать </string>
+    <string name="download"> Скачать </string>
     <string name="Mark">Оценка: </string>
 
     <!-- Авторизация -->
