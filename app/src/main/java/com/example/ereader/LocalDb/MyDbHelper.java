@@ -15,12 +15,19 @@ public class MyDbHelper extends SQLiteOpenHelper
     public void clearTable(SQLiteDatabase sqLiteDatabase){
         sqLiteDatabase.execSQL(MyConstants.CLEAR_TABLE);
     }
+    //Удаление записи
+    public void deleteBook(SQLiteDatabase sqLiteDatabase,String author,String name){
+        String cmd = "DELETE FROM " + MyConstants.TABLE_NAME + " WHERE " +
+                MyConstants.NAME + " = '" + name +"' and " +
+                MyConstants.AUTHOR + " = '" + author +"'";
+        sqLiteDatabase.execSQL(cmd);
+    }
     //Создание таблицы, если не создана
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(MyConstants.TABLE_STRUCTURE);
     }
-    //Уничтожение
+    //Обновление
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL(MyConstants.DROP_TABLE);

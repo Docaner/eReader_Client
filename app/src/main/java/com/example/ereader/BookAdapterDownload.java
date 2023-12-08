@@ -19,10 +19,9 @@ public class BookAdapterDownload extends RecyclerView.Adapter<BookViewHolder>{
     private List<BookDownload> items;
     private Context context;
 
-    TextView tvTest;
     public BookAdapterDownload(Context context,List<BookDownload> items) {
         this.context = context;
-        this.items=items;
+        this.items = items;
     }
 
     @NonNull
@@ -36,10 +35,15 @@ public class BookAdapterDownload extends RecyclerView.Adapter<BookViewHolder>{
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
 
         BookDownload item = items.get(position);
+
+        String st2 =""+item.author;
+        String st3 =""+item.name;
         holder.itemView.setOnClickListener(
                 view -> {
                     Intent intent = new Intent(context,BookDescriptionsActivity.class);
-                    intent.putExtra("positions",position);
+                    intent.putExtra("status",1);
+                    intent.putExtra("author",st2);
+                    intent.putExtra("name",st3);
                     context.startActivity(intent);
                 }
         );

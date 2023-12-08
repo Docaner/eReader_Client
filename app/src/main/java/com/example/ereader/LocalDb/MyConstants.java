@@ -26,5 +26,7 @@ public class MyConstants {
 
     //Drop
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+    //Очистка таблицы
     public static final String CLEAR_TABLE = "DELETE FROM "+ TABLE_NAME;
+
 }

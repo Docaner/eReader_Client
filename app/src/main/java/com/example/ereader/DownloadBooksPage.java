@@ -20,7 +20,6 @@ import java.util.List;
 public class DownloadBooksPage extends AppCompatActivity {
     private Toolbar toolbar;
     private MyDbManager dbManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +44,6 @@ public class DownloadBooksPage extends AppCompatActivity {
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mRecycleView.setAdapter(adapter);
-        //dbManager.closeDb();
     }
     @Override
     protected void onDestroy(){

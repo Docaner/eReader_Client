@@ -9,7 +9,8 @@
         android:orderInCategory="100"
         android:actionLayout="@layout/toolbar"
         android:title="Главная"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        />
     <item
         android:titleCondensed="@string/main_menu_libraru"
         android:id="@+id/library"

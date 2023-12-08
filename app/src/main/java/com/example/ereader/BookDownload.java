@@ -3,6 +3,34 @@ package com.example.ereader;
 import java.util.Objects;
 
 public class BookDownload{
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
     public int id;
     public String name;
     public String author;
@@ -26,6 +54,7 @@ public class BookDownload{
         this.path = path;
         this.progress = progress;
     }
+    public BookDownload() { }
     public BookDownload(Book bk){
         this.id = bk.id;
         this.name = bk.name;

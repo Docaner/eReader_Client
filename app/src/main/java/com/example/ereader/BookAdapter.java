@@ -26,9 +26,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
+
         holder.itemView.setOnClickListener(
                 view -> {
                     Intent intent = new Intent(context,BookDescriptionsActivity.class);
+                    intent.putExtra("status",0);
                     intent.putExtra("positions",position);
                     context.startActivity(intent);
                 }
