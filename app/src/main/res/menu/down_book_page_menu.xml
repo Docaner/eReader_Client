@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:titleCondensed="@string/main_book_page"
+        android:id="@+id/main_book"
+        android:icon="@drawable/main_book"
+        android:orderInCategory="100"
+        android:actionLayout="@layout/toolbar"
+        android:title="Главная"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:titleCondensed="@string/main_menu_libraru"
+        android:id="@+id/library"
+        android:icon="@drawable/my_library"
+        android:orderInCategory="200"
+        android:actionLayout="@layout/toolbar"
+        android:title="Моя библиотека"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:titleCondensed="@string/main_menu_exit"
+        android:id="@+id/exit_to_app"
+        android:icon="@drawable/exit_to_app"
+        android:orderInCategory="300"
+        android:actionLayout="@layout/toolbar"
+        android:title="Выйти"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:titleCondensed="@string/main_menu_exit"
+        android:id="@+id/clear_all_table"
+        android:icon="@drawable/clear_all"
+        android:orderInCategory="210"
+        android:actionLayout="@layout/toolbar"
+        android:title="Очистить список"
+        app:showAsAction="ifRoom"
+        />
+</menu>

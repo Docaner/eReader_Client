@@ -47,7 +47,9 @@ public class MyDbManager {
 
        db.insert(MyConstants.TABLE_NAME,null,cv);
     }
-
+    public void clearAllDb(){
+        MyDbHelper.clearTable(db);
+    }
     //Считывать
     public ArrayList<BookDownload> getFromDb(){
 

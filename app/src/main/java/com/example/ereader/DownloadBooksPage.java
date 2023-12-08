@@ -45,13 +45,17 @@ public class DownloadBooksPage extends AppCompatActivity {
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mRecycleView.setAdapter(adapter);
+        //dbManager.closeDb();
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
         dbManager.closeDb();
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu,menu);
+        inflater.inflate(R.menu.down_book_page_menu,menu);
         return true;
     }
 
@@ -63,6 +67,10 @@ public class DownloadBooksPage extends AppCompatActivity {
         int id = item.getItemId();
         if (id==R.id.main_book) {//главный список
             intent = new Intent(this, MainPage.class);
+        }
+        if (id ==R.id.clear_all_table){
+            dbManager.clearAllDb();
+            intent = new Intent(this, DownloadBooksPage.class);
         }
         if (id==R.id.library) {//список скачанных книг
             intent = new Intent(this, DownloadBooksPage.class);
