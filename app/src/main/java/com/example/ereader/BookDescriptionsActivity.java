@@ -1,6 +1,6 @@
 package com.example.ereader;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,7 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.ereader.LocalDb.MyDbManager;
 
-import java.util.ArrayList;
 
 public class BookDescriptionsActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -75,7 +74,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
         }
 
         if (exist ==1){//Если книга есть в БД
-            Button bt = (Button)findViewById(R.id.button_download);
+            Button bt =findViewById(R.id.button_download);
             bt.setText("Удалить");
         }
 
@@ -96,11 +95,17 @@ public class BookDescriptionsActivity extends AppCompatActivity {
     public void Download(View v){
         //Сюда вставиьт изменение пути для Path
         //Сюда вставить изменение прогресса для progress
-        if (exist ==1){//Если книга есть в БД
+        if (exist == 1){//Если книга есть в БД
             dbManager.deleteBook(dbk.author, dbk.name);
+            Button bt = findViewById(R.id.button_download);
+            bt.setText("Скачать");
+            exist=0;
         }
         else {
             dbManager.insertToDb(dbk.author, dbk.name, dbk.description, dbk.rating, dbk.progress, dbk.path);
+            Button bt = findViewById(R.id.button_download);
+            bt.setText("Удалить");
+            exist=1;
         }
     }
 
