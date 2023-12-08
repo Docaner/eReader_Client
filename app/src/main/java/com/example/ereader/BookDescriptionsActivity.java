@@ -22,6 +22,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private MyDbManager dbManager;
     private BookDownload dbk;
+    private  String xe;
     private int exist;
     @Override
     protected void onCreate(@Nullable Bundle saved){
@@ -49,6 +50,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
             textView3.setText(book.getDescription());
             TextView textView4 =findViewById(R.id.textView4);//название
             textView4.setText(book.getName());
+            xe=book.getName();
             ImageView imageView1 = findViewById(R.id.imageView);
             imageView1.setImageResource(book.getImage());
             exist = dbManager.searchAuthorName(book.author,book.name);
@@ -87,6 +89,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
     public  void  StartRead(View v)
     {
         Intent intent = new Intent(this, ReadActivity.class);
+        intent.putExtra("Name",xe);
         startActivity(intent);
     }
 

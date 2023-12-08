@@ -1,10 +1,7 @@
 package com.example.ereader;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Environment;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,30 +18,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
-import org.xml.sax.SAXException;
-
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
-import javax.xml.parsers.ParserConfigurationException;
+
+import com.example.ereader.LocalDb.MyDbManager;
+
 
 public class ReadActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private boolean isNightModeOn;
     private StringBuilder text = new StringBuilder();
     private int a;
+    private MyDbManager dbManager;
     private boolean useAlternativeTheme;
     private double scrollPosition;
+    private String Name;
+    private BookDownload bookdown;
     private  TextView mTextStatus;
     private TextView textView;;
     private ScrollView  mScrollView;
     private  double scrollViewHeight;
+    private  BookDownload bookDownload;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +48,27 @@ public class ReadActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         setTheme(android.R.style.Theme);
-        getSupportActionBar().setTitle("Read");
+        dbManager = new MyDbManager(this);
+        dbManager.openDb();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            Name = extras.getString("Name");
+            //The key argument here must match that used in the other activity
+        }
+        getSupportActionBar().setTitle(Name);
         isNightModeOn=false;
         BufferedReader reader = null;
-a=20;
+        a=20;
+        bookdown=dbManager.getProgressPathByName(Name);
+
+
+
+
+
         try {
             reader = new BufferedReader(
-                    new InputStreamReader(getAssets().open("Doner_Loren_Neuderzimaa_strast_r2_Pr8Ji.txt")));
+                    new InputStreamReader(getAssets().open("Jako_pomnishi_ego.txt")));
 
             // do reading, usually loop until end of file reading
             String mLine;
@@ -95,11 +104,12 @@ a=20;
                     TextView procent= (TextView) findViewById(R.id.textView5);
                     String stringdouble= String.format("%.2f",scrollPosition)+" %";
                     procent.setText(stringdouble);
+
                 }
             });
             mScrollView.post(new Runnable() {
                 public void run() {
-                    mScrollView.scrollTo(0, (int)(mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight())*30/100);
+                    mScrollView.scrollTo(0, (int)(mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight())*bookdown.progress/100);
                 }
             });
             Button btnTextSize = (Button) findViewById(R.id.button);
@@ -108,15 +118,15 @@ a=20;
             switch_btn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
-                if(isNightModeOn)
-                {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    isNightModeOn=false;
-                } else
-                {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    isNightModeOn=true;
-                }
+                    if(isNightModeOn)
+                    {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        isNightModeOn=false;
+                    } else
+                    {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        isNightModeOn=true;
+                    }
                 }
 
             });
@@ -137,7 +147,7 @@ a=20;
                 public void onClick(View v) {
                     double p=scrollPosition;
 
-                   a-=3;
+                    a-=3;
                     mTextStatus.setTextSize(a); //значение присваивается в sp (px лучше не использовать)
                     mScrollView.post(new Runnable() {
                         public void run() {
@@ -170,6 +180,7 @@ a=20;
         inflater.inflate(R.menu.readmenu,menu);
         return true;
     }
+
     //Реакция на меню в toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -188,8 +199,24 @@ a=20;
         startActivity(intent);
         return true;
     }
-    public  void anotherstyle(View v){
-        getTheme();
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dbManager.insertToDbByName(Name,(int)scrollPosition+1);
+    }
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        dbManager.insertToDbByName(Name,(int)scrollPosition+1);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dbManager.insertToDbByName(Name,(int)scrollPosition+1);
+        dbManager.closeDb();
     }
 
 }
