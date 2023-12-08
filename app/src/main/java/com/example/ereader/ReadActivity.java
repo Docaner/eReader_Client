@@ -187,8 +187,8 @@ public class ReadActivity extends AppCompatActivity {
         //Выбор item'а
         Intent intent= new Intent(this, MainPage.class);
         int id = item.getItemId();
-        if (id==R.id.library) {
-            intent = new Intent(this, Book_description.class);
+        if (id==R.id.library) {//список скачанных книг
+            intent = new Intent(this, DownloadBooksPage.class);
         }
         if (id==R.id.main_book) {
             intent = new Intent(this, MainPage.class);
