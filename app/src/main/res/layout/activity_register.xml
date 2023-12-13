@@ -1,83 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".RegisterActivity">
 
-    <LinearLayout
-        android:id="@+id/reg_form"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Регистрация"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textAlignment="center"
+        android:layout_marginTop="160dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textSize="32dp"
+        />
 
-        <TextView
-            android:id="@+id/reg_form_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="120px"
-            android:text="@string/register"
-            android:textAlignment="center"
-            android:textSize="34sp" />
+    <EditText
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Логин" />
 
-        <EditText
-            android:id="@+id/reg_form_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/login"
-            android:inputType="text"
-            android:minHeight="48dp" />
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Пароль" />
 
-        <EditText
-            android:id="@+id/reg_form_passowrd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:minHeight="48dp" />
 
-        <EditText
-            android:id="@+id/reg_form_passowrd2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="120px"
-            android:ems="10"
-            android:hint="@string/password_repeat"
-            android:inputType="textPassword"
-            android:minHeight="48dp" />
+    <Button
+        android:onClick="Register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Регистрация"/>
 
-        <LinearLayout
-            android:id="@+id/reg_block_buttons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:visibility="visible">
+    <TextView
+        android:onClick="goToLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Уже есть аккаунт?"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textAlignment="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textSize="16dp"
+        />
 
-            <Button
-                android:id="@+id/reg_button_auth_form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40px"
-                android:onClick="startMainActivity"
-                android:text="@string/auth"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/reg_button_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="startMainPage"
-                android:text="@string/button_login"
-                android:textAlignment="center"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
