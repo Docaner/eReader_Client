@@ -29,7 +29,7 @@ public class DownloadBooksPage extends AppCompatActivity {
         //toolbar
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Main Page");
+        getSupportActionBar().setTitle("Библиотека");
 
         dbManager = new MyDbManager(this);
         dbManager.openDb();

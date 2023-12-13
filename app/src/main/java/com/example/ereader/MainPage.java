@@ -22,7 +22,7 @@ public class MainPage extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Main Page");
+        getSupportActionBar().setTitle("Главная страница");
 
         //RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerview_books);

@@ -1,8 +1,12 @@
 package com.example.ereader;
 
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +22,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.ereader.LocalDb.MyDbManager;
 
+import java.util.jar.Attributes;
+import java.util.logging.Handler;
+
 
 public class BookDescriptionsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private MyDbManager dbManager;
     private BookDownload dbk;
     private  String xe;
+    private  String x;
+    DownloadManager manager;
     private int exist;
     @Override
     protected void onCreate(@Nullable Bundle saved){
@@ -37,9 +47,10 @@ public class BookDescriptionsActivity extends AppCompatActivity {
 
         Book book = new Book();
         int status = arguments.getInt("status");
+
         if (status == 0){
             int positions = getIntent().getIntExtra("positions", 0);
-
+            x= String.valueOf(status);
             book = BooksCollection.getBooksCollections().get(positions,bk);
 
             TextView textView1 = findViewById(R.id.textView);//оценка
@@ -59,7 +70,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
         if (status == 1){
             String author = arguments.getString("author");
             String name = arguments.getString("name");
-
+            x= String.valueOf(status);
             dbk = dbManager.getOneBook(author,name);
 
             TextView textView1 = findViewById(R.id.textView);//оценка
@@ -70,6 +81,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
             textView3.setText(dbk.getDescription());
             TextView textView4 =findViewById(R.id.textView4);//название
             textView4.setText(dbk.getName());
+            xe=dbk.getName();
             ImageView imageView1 = findViewById(R.id.imageView);
             imageView1.setImageResource(R.drawable.default_book);
             exist = dbManager.searchAuthorName(dbk.author,dbk.name);
@@ -78,11 +90,12 @@ public class BookDescriptionsActivity extends AppCompatActivity {
         if (exist ==1){//Если книга есть в БД
             Button bt =findViewById(R.id.button_download);
             bt.setText("Удалить");
+            x= String.valueOf(exist);
         }
 
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Main Page");
+        getSupportActionBar().setTitle(xe);
     }
 
     //Кнопка чтения
@@ -90,6 +103,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, ReadActivity.class);
         intent.putExtra("Name",xe);
+        intent.putExtra("Status",x);
         startActivity(intent);
     }
 
@@ -101,14 +115,42 @@ public class BookDescriptionsActivity extends AppCompatActivity {
         if (exist == 1){//Если книга есть в БД
             dbManager.deleteBook(dbk.author, dbk.name);
             Button bt = findViewById(R.id.button_download);
-            bt.setText("Скачать");
-            exist=0;
+            new CountDownTimer(3000, 1000) {
+                public void onFinish() {
+                    bt.setText("Скачать");
+
+                    exist=0;
+                    Toast.makeText(getApplicationContext(), "Книга удалена", Toast.LENGTH_LONG).show();
+                }
+
+                public void onTick(long millisUntilFinished) {
+                    // millisUntilFinished    The amount of time until finished.
+                }
+            }.start();
+
         }
         else {
             dbManager.insertToDb(dbk.author, dbk.name, dbk.description, dbk.rating, dbk.progress, dbk.path);
             Button bt = findViewById(R.id.button_download);
-            bt.setText("Удалить");
-            exist=1;
+            new CountDownTimer(5000, 1000) {
+                public void onFinish() {
+                    manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri uri = Uri.parse("https://all-the-books.ru/download_book/00ae0503fb38bd4900ae27731912fde3/");
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+                    long reference = manager.enqueue(request);
+                    bt.setText("Удалить");
+
+                    exist=1;
+                    Toast.makeText(getApplicationContext(), "Книга скачена", Toast.LENGTH_LONG).show();
+                }
+
+                public void onTick(long millisUntilFinished) {
+                    // millisUntilFinished    The amount of time until finished.
+                }
+            }.start();
+
+
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.ereader;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -30,7 +32,7 @@ public class ReadActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private boolean isNightModeOn;
     private StringBuilder text = new StringBuilder();
-    private int a;
+    private int a,g=0;
     private MyDbManager dbManager;
     private boolean useAlternativeTheme;
     private double scrollPosition;
@@ -38,12 +40,22 @@ public class ReadActivity extends AppCompatActivity {
     private BookDownload bookdown;
     private  TextView mTextStatus;
     private TextView textView;;
+    private int x;
+    private int d=0;
+    int z=0;
     private ScrollView  mScrollView;
     private  double scrollViewHeight;
     private  BookDownload bookDownload;
+    EditText etText;
+    Button btnSave, btnLoad;
+
+    SharedPreferences sPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        final String SAVED_TEXT = "saved_text";
         setContentView(R.layout.activity_read);
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -54,12 +66,13 @@ public class ReadActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             Name = extras.getString("Name");
+            x=(int)extras.getInt("Status");
             //The key argument here must match that used in the other activity
         }
         getSupportActionBar().setTitle(Name);
         isNightModeOn=false;
         BufferedReader reader = null;
-        a=20;
+        loadTextA();
         bookdown=dbManager.getProgressPathByName(Name);
 
 
@@ -68,7 +81,7 @@ public class ReadActivity extends AppCompatActivity {
 
         try {
             reader = new BufferedReader(
-                    new InputStreamReader(getAssets().open("Jako_pomnishi_ego.txt")));
+                    new InputStreamReader(getAssets().open(Name+".txt")));
 
             // do reading, usually loop until end of file reading
             String mLine;
@@ -107,34 +120,39 @@ public class ReadActivity extends AppCompatActivity {
 
                 }
             });
+
             mScrollView.post(new Runnable() {
                 public void run() {
                     mScrollView.scrollTo(0, (int)(mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight())*bookdown.progress/100);
                 }
             });
+
             Button btnTextSize = (Button) findViewById(R.id.button);
             Button btnTextSizedown = (Button) findViewById(R.id.button3);
-            Switch  switch_btn = findViewById(R.id.switch1);
+            Button switch_btn = findViewById(R.id.button6);
+            Button switch_btn1 = findViewById(R.id.button7);
             switch_btn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
-                    if(isNightModeOn)
-                    {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        isNightModeOn=false;
-                    } else
-                    {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        isNightModeOn=true;
-                    }
+
                 }
 
             });
+            switch_btn1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        isNightModeOn=true;
+
+            }});
             btnTextSize.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     double p=scrollPosition;
-
+if(d!=0)
                     a+=3;
+d++;
+                    saveTextA();
                     mTextStatus.setTextSize(a); //значение присваивается в sp (px лучше не использовать)
                     mScrollView.post(new Runnable() {
                         public void run() {
@@ -146,8 +164,10 @@ public class ReadActivity extends AppCompatActivity {
             btnTextSizedown.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     double p=scrollPosition;
-
+                    if(d!=0)
+                        d++;
                     a-=3;
+                    saveTextA();
                     mTextStatus.setTextSize(a); //значение присваивается в sp (px лучше не использовать)
                     mScrollView.post(new Runnable() {
                         public void run() {
@@ -200,9 +220,42 @@ public class ReadActivity extends AppCompatActivity {
         return true;
     }
 
+
+    void saveTextA() {
+        sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putInt("A",a);
+        ed.commit();
+
+    }
+
+    void loadTextA() {
+        sPref = getPreferences(MODE_PRIVATE);
+        int savedText = sPref.getInt("A",a);
+        a=(savedText);
+
+    }
+    void saveTextp() {
+        g=1;
+        sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putInt("P",(int) g);
+        ed.commit();
+
+    }
+
+    void loadTextp() {
+        sPref = getPreferences(MODE_PRIVATE);
+        int savedText = sPref.getInt("P",(int)scrollPosition);
+        g=(savedText);
+
+    }
     @Override
     protected void onPause() {
         super.onPause();
+        isNightModeOn=true;
+
+        loadTextp();
         dbManager.insertToDbByName(Name,(int)scrollPosition+1);
     }
     @Override
@@ -211,10 +264,18 @@ public class ReadActivity extends AppCompatActivity {
         super.onResume();
         dbManager.insertToDbByName(Name,(int)scrollPosition+1);
     }
+    @Override
+    protected void onDestroy(){
 
+
+        super.onDestroy();
+        dbManager.closeDb();
+    }
     @Override
     protected void onStop() {
         super.onStop();
+
+
         dbManager.insertToDbByName(Name,(int)scrollPosition+1);
         dbManager.closeDb();
     }
