@@ -18,15 +18,15 @@
         <activity
             android:name=".DownloadBooksPage"
             android:exported="false" />
-        <activity
-            android:name=".download_books"
-            android:exported="false" />
+
         <activity
             android:name=".ReadActivity"
             android:exported="false" />
         <activity
             android:name=".Book_description"
-            android:exported="false" />
+
+            android:exported="false"
+            />
         <activity
             android:name=".MainPage"
             android:exported="false" />
@@ -42,7 +42,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".BookDescriptionsActivity" />
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>

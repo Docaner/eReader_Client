@@ -2,20 +2,24 @@ package com.example.ereader;
 
 
 import android.app.DownloadManager;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.DoNotInline;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -32,13 +36,14 @@ public class BookDescriptionsActivity extends AppCompatActivity {
     private BookDownload dbk;
     private  String xe;
     private  String x;
-    DownloadManager manager;
+    Button downloadUrl;
     private int exist;
     @Override
     protected void onCreate(@Nullable Bundle saved){
         super.onCreate(saved);
         dbManager = new MyDbManager(this);
 
+        downloadUrl = (Button) findViewById(R.id.button4);
         //Подтягивание данных из списка книг
         setContentView(R.layout.activity_book_description);
         Book bk =new Book();
@@ -61,6 +66,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
             textView3.setText(book.getDescription());
             TextView textView4 =findViewById(R.id.textView4);//название
             textView4.setText(book.getName());
+
             xe=book.getName();
             ImageView imageView1 = findViewById(R.id.imageView);
             imageView1.setImageResource(book.getImage());
@@ -107,6 +113,25 @@ public class BookDescriptionsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void Url(View v){
+        TextView textV = findViewById(R.id.textView6);
+        EditText textView6 = findViewById(R.id.editTextText);
+        String getUrl = textView6.getText().toString();
+
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(getUrl));
+        String title = URLUtil.guessFileName(getUrl,null,null);
+        request.setTitle(title);
+        request.setDescription("Downloading File please wait...");
+        String cookie = CookieManager.getInstance().getCookie(getUrl);
+        request.addRequestHeader("cookie",cookie);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
+
+        DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+        downloadManager.enqueue(request);
+
+        Toast.makeText(BookDescriptionsActivity.this,"Downloading started.",Toast.LENGTH_SHORT).show();
+    }
 
     //Кнопка скачивания
     public void Download(View v){
@@ -115,7 +140,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
         if (exist == 1){//Если книга есть в БД
             dbManager.deleteBook(dbk.author, dbk.name);
             Button bt = findViewById(R.id.button_download);
-            new CountDownTimer(3000, 1000) {
+            new CountDownTimer(2000, 1000) {
                 public void onFinish() {
                     bt.setText("Скачать");
 
@@ -132,15 +157,9 @@ public class BookDescriptionsActivity extends AppCompatActivity {
         else {
             dbManager.insertToDb(dbk.author, dbk.name, dbk.description, dbk.rating, dbk.progress, dbk.path);
             Button bt = findViewById(R.id.button_download);
-            new CountDownTimer(5000, 1000) {
+            new CountDownTimer(3500, 1000) {
                 public void onFinish() {
-                    manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                    Uri uri = Uri.parse("https://all-the-books.ru/download_book/00ae0503fb38bd4900ae27731912fde3/");
-                    DownloadManager.Request request = new DownloadManager.Request(uri);
-                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-                    long reference = manager.enqueue(request);
                     bt.setText("Удалить");
-
                     exist=1;
                     Toast.makeText(getApplicationContext(), "Книга скачена", Toast.LENGTH_LONG).show();
                 }
