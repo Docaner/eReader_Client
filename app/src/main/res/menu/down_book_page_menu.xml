@@ -20,6 +20,15 @@
         android:title="Моя библиотека"
         app:showAsAction="always"/>
     <item
+        android:titleCondensed="@string/main_menu_clear"
+        android:id="@+id/clear_all_table"
+        android:icon="@drawable/baseline_delete"
+        android:orderInCategory="210"
+        android:actionLayout="@layout/toolbar"
+        android:title="Очистить список"
+        app:showAsAction="always"
+        />
+    <item
         android:titleCondensed="@string/main_menu_exit"
         android:id="@+id/exit_to_app"
         android:icon="@drawable/exit_to_app"
@@ -27,13 +36,5 @@
         android:actionLayout="@layout/toolbar"
         android:title="Выйти"
         app:showAsAction="always"/>
-    <item
-        android:titleCondensed="@string/main_menu_exit"
-        android:id="@+id/clear_all_table"
-        android:icon="@drawable/clear_all"
-        android:orderInCategory="210"
-        android:actionLayout="@layout/toolbar"
-        android:title="Очистить список"
-        app:showAsAction="always"
-        />
+
 </menu>
