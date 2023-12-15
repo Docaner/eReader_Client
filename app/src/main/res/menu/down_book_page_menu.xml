@@ -9,7 +9,7 @@
         android:orderInCategory="100"
         android:actionLayout="@layout/toolbar"
         android:title="Главная"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         />
     <item
         android:titleCondensed="@string/main_menu_libraru"
@@ -18,7 +18,7 @@
         android:orderInCategory="200"
         android:actionLayout="@layout/toolbar"
         android:title="Моя библиотека"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     <item
         android:titleCondensed="@string/main_menu_exit"
         android:id="@+id/exit_to_app"
@@ -26,7 +26,7 @@
         android:orderInCategory="300"
         android:actionLayout="@layout/toolbar"
         android:title="Выйти"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     <item
         android:titleCondensed="@string/main_menu_exit"
         android:id="@+id/clear_all_table"
@@ -34,6 +34,6 @@
         android:orderInCategory="210"
         android:actionLayout="@layout/toolbar"
         android:title="Очистить список"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         />
 </menu>
