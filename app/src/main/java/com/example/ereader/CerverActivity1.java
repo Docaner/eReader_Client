@@ -41,7 +41,7 @@ public class CerverActivity1 extends AppCompatActivity {
     private  TextView mTextStatus;
     private TextView textView;;
     private int x;
-    private int d=0;
+    private int d;
     int z=0;
     private ScrollView  mScrollView;
     private  double scrollViewHeight;
@@ -54,7 +54,7 @@ public class CerverActivity1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        loadTextp();
         final String SAVED_TEXT = "saved_text";
         setContentView(R.layout.activity_cerver1);
         toolbar = findViewById(R.id.toolbar_main);
@@ -117,20 +117,20 @@ public class CerverActivity1 extends AppCompatActivity {
                     scrollPosition = (getScrollY / scrollViewHeight) * 100d;
                     Log.i("scrollview", "scroll Percent Y: " + (int) scrollPosition);
                     TextView procent= (TextView) findViewById(R.id.textView12);
-                    String stringdouble= String.format("%.2f",scrollPosition)+" %";
+                    String stringdouble= String.format("%.0f",scrollPosition)+" %";
                     procent.setText(stringdouble);
 
                 }
             });
-
+            loadTextp();
             mScrollView.post(new Runnable() {
                 public void run() {
-                    mScrollView.scrollTo(0, (int)(mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight())*bookdown.progress/100);
+                    mScrollView.scrollTo(0, (int)(mScrollView.getChildAt(0).getBottom() - mScrollView.getHeight())*d/100);
                 }
             });
 
-            Button btnTextSize = (Button) findViewById(R.id.button8);
-            Button btnTextSizedown = (Button) findViewById(R.id.button9);
+            Button btnTextSize = (Button) findViewById(R.id.button9);
+            Button btnTextSizedown = (Button) findViewById(R.id.button8);
             Button switch_btn = findViewById(R.id.button10);
             Button switch_btn1 = findViewById(R.id.button11);
             switch_btn.setOnClickListener(new View.OnClickListener() {
@@ -238,25 +238,25 @@ public class CerverActivity1 extends AppCompatActivity {
 
     }
     void saveTextp() {
-        g=1;
+
         sPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
-        ed.putInt("P",(int) g);
+        ed.putInt("P",(int)scrollPosition);
         ed.commit();
 
     }
 
     void loadTextp() {
         sPref = getPreferences(MODE_PRIVATE);
-        int savedText = sPref.getInt("P",(int)scrollPosition);
+        int savedText = sPref.getInt("P",g);
         g=(savedText);
 
     }
     @Override
     protected void onPause() {
         super.onPause();
-        isNightModeOn=true;
 
+        saveTextp();
         loadTextp();
         dbManager.insertToDbByName(Name,(int)scrollPosition+1);
     }
@@ -265,25 +265,24 @@ public class CerverActivity1 extends AppCompatActivity {
 
         super.onResume();
         dbManager.insertToDbByName(Name,(int)scrollPosition+1);
+        saveTextp();
     }
     @Override
     protected void onDestroy(){
 
-        File pathDownload = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
-        File file = new File(pathDownload, Name+".txt");
+
 
         super.onDestroy();
-        for(int i=0;5>i;i++) {file.delete();}
+        saveTextp();
         dbManager.closeDb();
     }
     @Override
     protected void onStop() {
         super.onStop();
-        File pathDownload = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
-        File file = new File(pathDownload, Name+".txt");
-        for(int i=0;5>i;i++) {file.delete();}
+        saveTextp();
         dbManager.insertToDbByName(Name,(int)scrollPosition+1);
         dbManager.closeDb();
     }
+
 
 }

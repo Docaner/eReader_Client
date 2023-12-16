@@ -153,11 +153,18 @@ public class BookDescriptionsActivity extends AppCompatActivity {
 
             }
             else {
-                Thread.sleep(20000);
+                for(int i=0;i<5;i++) {
+                    Thread.sleep(3000);
                 if(file.exists()){
                     intent = new Intent(this, CerverActivity1.class);
+                    intent.putExtra("Name", xe);
                     intent.putExtra("Status", x);
-                    startActivity(intent);
+                    startActivity(intent);}}
+                    if(file.exists()){
+                        intent = new Intent(this, CerverActivity1.class);
+                        intent.putExtra("Name", xe);
+                        intent.putExtra("Status", x);
+                        startActivity(intent);
                 }else {Toast.makeText(getApplicationContext(), "Книга не доступна", Toast.LENGTH_LONG).show();file.delete();}}
 
 
@@ -217,11 +224,17 @@ public class BookDescriptionsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Книга скачена", Toast.LENGTH_LONG).show();
             }
             else {
-                Thread.sleep(15000);
-                if(file.exists()){
-                bt.setText("Удалить");
-                exist = 1;
-
+                for(int i=0;i<5;i++) {
+                    Thread.sleep(3000);
+                    if (file.exists()) {
+                        bt.setText("Удалить");
+                        exist = 1;
+                        Toast.makeText(getApplicationContext(), "Книга скачена", Toast.LENGTH_LONG).show();
+                   break; }
+                }
+                    if(file.exists()) {
+                        bt.setText("Удалить");
+                        exist = 1;
                 Toast.makeText(getApplicationContext(), "Книга скачена", Toast.LENGTH_LONG).show();
             }else {Toast.makeText(getApplicationContext(), "Книга не скачена", Toast.LENGTH_LONG).show();file.delete();}}
         }

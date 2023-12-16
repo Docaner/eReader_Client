@@ -19,6 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".PerhodActivity"
+            android:exported="false" />
+        <activity
             android:name=".CerverActivity1"
             android:exported="false" />
         <activity
