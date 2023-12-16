@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">eReader</string>
     <string name="main_menu_exit">Выйти</string>
+    <string name="main_menu_clear">Очистить список</string>
     <string name="main_menu_libraru">Моя библиотека</string>
     <string name="main_book_page">Страница книги</string>
     <string name="main_page_update_allert">Последние обновления</string>
