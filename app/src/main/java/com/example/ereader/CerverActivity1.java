@@ -13,7 +13,6 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,17 +20,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.ereader.LocalDb.MyDbManager;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 
-import com.example.ereader.LocalDb.MyDbManager;
-
-
-public class ReadActivity extends AppCompatActivity {
+public class CerverActivity1 extends AppCompatActivity {
     private Toolbar toolbar;
     private boolean isNightModeOn;
     private StringBuilder text = new StringBuilder();
@@ -59,7 +56,7 @@ public class ReadActivity extends AppCompatActivity {
 
 
         final String SAVED_TEXT = "saved_text";
-        setContentView(R.layout.activity_read);
+        setContentView(R.layout.activity_cerver1);
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         setTheme(android.R.style.Theme);
@@ -105,10 +102,10 @@ public class ReadActivity extends AppCompatActivity {
                     //log the exception
                 }
             }
-            TextView output= (TextView) findViewById(R.id.book_read);
+            TextView output= (TextView) findViewById(R.id.book_read1);
             output.setText((CharSequence) text);
-            TextView mTextStatus = (TextView) findViewById(R.id.book_read);
-            ScrollView mScrollView = (ScrollView) findViewById(R.id.scrollView2);
+            TextView mTextStatus = (TextView) findViewById(R.id.book_read1);
+            ScrollView mScrollView = (ScrollView) findViewById(R.id.scrollView3);
             //scrollToBottom();
 
 
@@ -119,7 +116,7 @@ public class ReadActivity extends AppCompatActivity {
                     double getScrollY = mScrollView.getScrollY();
                     scrollPosition = (getScrollY / scrollViewHeight) * 100d;
                     Log.i("scrollview", "scroll Percent Y: " + (int) scrollPosition);
-                    TextView procent= (TextView) findViewById(R.id.textView5);
+                    TextView procent= (TextView) findViewById(R.id.textView12);
                     String stringdouble= String.format("%.2f",scrollPosition)+" %";
                     procent.setText(stringdouble);
 
@@ -132,10 +129,10 @@ public class ReadActivity extends AppCompatActivity {
                 }
             });
 
-            Button btnTextSize = (Button) findViewById(R.id.button);
-            Button btnTextSizedown = (Button) findViewById(R.id.button3);
-            Button switch_btn = findViewById(R.id.button6);
-            Button switch_btn1 = findViewById(R.id.button7);
+            Button btnTextSize = (Button) findViewById(R.id.button8);
+            Button btnTextSizedown = (Button) findViewById(R.id.button9);
+            Button switch_btn = findViewById(R.id.button10);
+            Button switch_btn1 = findViewById(R.id.button11);
             switch_btn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
@@ -212,13 +209,13 @@ public class ReadActivity extends AppCompatActivity {
         //Выбор item'а
         Intent intent= new Intent(this, MainPage.class);
         int id = item.getItemId();
-        if (id==R.id.library) {//список скачанных книг
+        if (id== R.id.library) {//список скачанных книг
             intent = new Intent(this, DownloadBooksPage.class);
         }
-        if (id==R.id.main_book) {
+        if (id== R.id.main_book) {
             intent = new Intent(this, MainPage.class);
         }
-        if (id==R.id.settings) {
+        if (id== R.id.settings) {
             intent = new Intent(this, MainActivity.class);
         }
         startActivity(intent);
@@ -272,15 +269,19 @@ public class ReadActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
 
+        File pathDownload = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+        File file = new File(pathDownload, Name+".txt");
 
         super.onDestroy();
+        for(int i=0;5>i;i++) {file.delete();}
         dbManager.closeDb();
     }
     @Override
     protected void onStop() {
         super.onStop();
-
-
+        File pathDownload = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+        File file = new File(pathDownload, Name+".txt");
+        for(int i=0;5>i;i++) {file.delete();}
         dbManager.insertToDbByName(Name,(int)scrollPosition+1);
         dbManager.closeDb();
     }

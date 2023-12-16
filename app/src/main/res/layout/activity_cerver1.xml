@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReadActivity">
+    tools:context=".CerverActivity1">
 
     <include layout="@layout/toolbar" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/scrollView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/book_read"
+            android:id="@+id/book_read1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -44,33 +44,33 @@
         app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/button8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/down" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/upper" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/button10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="C" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/button11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Т" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

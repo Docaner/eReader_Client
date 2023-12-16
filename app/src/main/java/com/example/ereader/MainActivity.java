@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
-                String result = response.body().getResponse();
+                Users user = response.body();
+                String result = user.getResponse();
 
                 if (result.equals("ok")) {
                     Toast.makeText(MainActivity.this,  "Вы были успешно авторизованы", Toast.LENGTH_SHORT).show();

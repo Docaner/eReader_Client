@@ -56,10 +56,19 @@ public class RegisterActivity extends AppCompatActivity {
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
-                Toast.makeText(RegisterActivity.this,  "Вы были успешно зарегистрированы", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-                Intent intent = new Intent(RegisterActivity.this, MainPage.class);
-                startActivity(intent);
+                Users user = response.body();
+                String result = user.getResponse();
+
+                if (result.equals("ok")) {
+                    Toast.makeText(RegisterActivity.this,  "Вы успешно зарегистрированы", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    Intent intent = new Intent(RegisterActivity.this,MainPage.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(RegisterActivity.this,  "Данный пользователь уже зарегистрирован", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
             }
 
             @Override
