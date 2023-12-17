@@ -159,7 +159,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
                     intent = new Intent(this, CerverActivity1.class);
                     intent.putExtra("Name", xe);
                     intent.putExtra("Status", x);
-                    startActivity(intent);}}
+                    startActivity(intent);break;}}
                     if(file.exists()){
                         intent = new Intent(this, CerverActivity1.class);
                         intent.putExtra("Name", xe);
