@@ -130,17 +130,22 @@ public class BookDescriptionsActivity extends AppCompatActivity {
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(getUrl));
             String title = URLUtil.guessFileName(getUrl,null,null);
             title= xe+".txt";
-            request.setTitle(title);
-            request.setDescription("Идет загрузка....");
-            String cookie = CookieManager.getInstance().getCookie(getUrl);
-            request.addRequestHeader("cookie",cookie);
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
-
-            DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-            downloadManager.enqueue(request);
+            File pathDownloadNow = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+            File fileNow = new File(pathDownloadNow, xe+".txt");
             File pathDownload = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+            if(fileNow.exists()){}
+            else {
+                request.setTitle(title);
+                request.setDescription("Идет загрузка....");
+                String cookie = CookieManager.getInstance().getCookie(getUrl);
+                request.addRequestHeader("cookie", cookie);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
 
+                DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                downloadManager.enqueue(request);
+                pathDownload = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+            }
             File file = new File(pathDownload, xe+".txt");
             if(file.exists()) {
                 intent = new Intent(this, CerverActivity1.class);
