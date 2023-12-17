@@ -1,5 +1,7 @@
 package com.example.ereader;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -20,5 +22,5 @@ public interface ApiInterface {
     Call<Users> performLogin(@Field("login") String name, @Field("password") String password);
 
     @GET("books")
-    Call<Users> performBooks ();
+    Call<List<HttpBook>> getAllBooks();
 }

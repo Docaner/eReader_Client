@@ -12,10 +12,12 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
     Context context;
-    List<Book> books = new BooksCollection().books;
+    //List<Book> books = new BooksCollection().books;
+    List<Book> books;
 
-    public BookAdapter(Context context) {
+    public BookAdapter(Context context, List<Book> books) {
         this.context = context;
+        this.books = books;
     }
 
     @NonNull

@@ -5,18 +5,36 @@ import java.util.Objects;
 public class Book {
 
     public int id;
-    public String name;
     public String author;
+    public String name;
     public String description;
+    //Ссылка на аватар
+    public String urlAvatar;
+    //Ссылка на книгу
+    public String link;
+
     public Double rating;
-    public int image;
+
+    public int image = R.drawable.default_book;
+
+
+    //Конструктор для HttpBook
+    public Book(int id, String author, String name, String description, String urlAvatar, String link, double rating){
+        this.id = id;
+        this.author = author;
+        this.name = name;
+        this.description = description;
+        this.urlAvatar = urlAvatar;
+        this.link = link;
+        this.rating = rating;
+    }
+
     public Book(int id,String name, String author, String description, Double rating,int image) {
         this.id = id;
         this.name = name;
         this.author = author;
         this.description = description;
         this.rating = rating;
-        this.image = image;
     }
     public Book(int id,String name, String author, String description, Double rating) {
         this.id = id;
@@ -24,7 +42,6 @@ public class Book {
         this.author = author;
         this.description = description;
         this.rating = rating;
-        this.image = R.drawable.default_book;
     }
 
     public Book(){}
