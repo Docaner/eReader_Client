@@ -37,10 +37,22 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
                     context.startActivity(intent);
                 }
         );
-        holder.nameView.setText(books.get(position).name);
-        holder.authorView.setText(books.get(position).author);
-        holder.ratingView.setText(books.get(position).rating.toString());
-        holder.imageView.setImageResource(books.get(position).image);
+
+        Book book = books.get(position);
+
+        holder.nameView.setText(book.name);
+        holder.authorView.setText(book.author);
+        holder.ratingView.setText(book.rating.toString());
+
+
+        new ImageLoadTask(book, holder.imageView).execute();
+        /*
+        if(book.bitAvatar != null) {
+            holder.imageView.setImageBitmap(books.get(position).bitAvatar);
+        }
+        else
+            holder.imageView.setImageResource(book.image);
+    */
     }
 
     @Override

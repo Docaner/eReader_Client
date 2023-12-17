@@ -1,6 +1,15 @@
 package com.example.ereader;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class HttpBook {
     @SerializedName("id")

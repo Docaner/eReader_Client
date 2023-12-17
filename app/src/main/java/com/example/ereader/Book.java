@@ -1,5 +1,7 @@
 package com.example.ereader;
 
+import android.graphics.Bitmap;
+
 import java.util.Objects;
 
 public class Book {
@@ -10,6 +12,8 @@ public class Book {
     public String description;
     //Ссылка на аватар
     public String urlAvatar;
+    //Bitmap на аватар
+    public Bitmap bitAvatar = null;
     //Ссылка на книгу
     public String link;
 

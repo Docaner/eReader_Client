@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -18,9 +17,9 @@
         android:theme="@style/Theme.EReader"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
+       <!--<activity
             android:name=".PerhodActivity"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".CerverActivity1"
             android:exported="false" />
