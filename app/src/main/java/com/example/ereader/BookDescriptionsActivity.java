@@ -38,7 +38,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
     private  String xe;
     private  String x;
     private Book book;
-    private String[] link=new String[10];
+    //private String[] link=new String[10];
     Button downloadUrl;
     private int exist;
     @Override
@@ -54,20 +54,20 @@ public class BookDescriptionsActivity extends AppCompatActivity {
 
         Bundle arguments = getIntent().getExtras();
 
-        book = new Book();
+        /*book = new Book();
         link[0]=null;
         link[1]="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1DLNWmUc8RLJ0LbzZmVTjWe3y3g8xLWBG";
         link[2]="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1p05bN62wkOruWmXlJVLblFRYjofPjBCa";
         link[3]="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=18IN6OvRalVKaNyjYvhQouOFBd7sstaCW";
         link[4]="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1czbxX4bYfhnor8WdBpVlbtMtd6N9EDov";
         link[5]="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1qjTpKAfATPzOcJRLvNeZPElFXuaEfOm9";
-
+        */
         int status = arguments.getInt("status");
 
         if (status == 0){
             int positions = getIntent().getIntExtra("positions", 0);
             x= String.valueOf(status);
-            book = BooksCollection.getBooksCollections().get(positions,bk);
+            book = BooksCollection.books.get(positions);
 
             TextView textView1 = findViewById(R.id.textView);//оценка
             textView1.setText(book.getRating().toString());
@@ -80,7 +80,12 @@ public class BookDescriptionsActivity extends AppCompatActivity {
 
             xe=book.getName();
             ImageView imageView1 = findViewById(R.id.imageView);
-            imageView1.setImageResource(book.getImage());
+
+            if(book.bitAvatar != null)
+                imageView1.setImageBitmap(book.bitAvatar);
+            else
+                imageView1.setImageResource(book.image);
+
             exist = dbManager.searchAuthorName(book.author,book.name);
             dbk = new BookDownload(book);
         }
@@ -100,6 +105,7 @@ public class BookDescriptionsActivity extends AppCompatActivity {
             textView4.setText(dbk.getName());
             xe=dbk.getName();
             ImageView imageView1 = findViewById(R.id.imageView);
+
             imageView1.setImageResource(R.drawable.default_book);
             exist = dbManager.searchAuthorName(dbk.author,dbk.name);
         }
@@ -124,7 +130,8 @@ public class BookDescriptionsActivity extends AppCompatActivity {
             startActivity(intent);
         }else
         {
-            String getUrl = link[book.getId()];
+            //String getUrl = link[book.getId()];
+            String getUrl = book.link;
 
 
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(getUrl));
@@ -202,7 +209,8 @@ public class BookDescriptionsActivity extends AppCompatActivity {
         else {
             dbManager.insertToDb(dbk.author, dbk.name, dbk.description, dbk.rating, dbk.progress, dbk.path);
             Button bt = findViewById(R.id.button_download);
-            String getUrl = link[book.getId()];
+            //String getUrl = link[book.getId()];
+            String getUrl = book.link;
 
 
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(getUrl));
